@@ -58,7 +58,6 @@ namespace Connect4 {
             {
                 for (int k = 0; k < 6; k++)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
                     if(winner[i,k] == 1) gameBoard[i,k] = "W";
                 }
             }
