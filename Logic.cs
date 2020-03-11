@@ -11,6 +11,7 @@ namespace Connect4 {
         private int[, ] p2;
         private Boolean winDecided;
         private String winner;
+        private int turn;
 
         public void startGame () {
             gb = new Display ();
@@ -18,6 +19,7 @@ namespace Connect4 {
             setPlayerBoards ();
             isPlayerOne = true;
             winDecided = false;
+            turn = 0;
             while (winDecided == false) {
                 Console.Clear ();
                 gb.updateDisplay ();
@@ -31,6 +33,8 @@ namespace Connect4 {
                 checkP1Win ();
                 checkP2Win ();
                 changePlayer (isPlayerOne);
+                turn++;
+                if (turn == 42) winDecided = true;
                 if(winDecided == true) displayWinner ();
             }
         }
@@ -327,14 +331,19 @@ namespace Connect4 {
             }
         }
         private void displayWinner () {
-            if(winner == "Player One") {
+            if (winner == "Player One") {
                 gb.showWinningBoard (p1);
             } else {
                 gb.showWinningBoard (p2);
             }
-            Console.Clear ();
-            gb.updateDisplay ();
-            Console.WriteLine ("{0} has won the match!", winner);
+            if (turn != 42) {
+                Console.Clear ();
+                gb.updateDisplay ();
+                Console.WriteLine ("{0} has won the match in {1} turns!", winner, turn);
+            } else {
+                Console.WriteLine ("Tie Game!");
+            }
+            
         }
         private void changePlayer (Boolean player) {
             if (player == true) {
