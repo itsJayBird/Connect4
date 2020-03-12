@@ -16,7 +16,7 @@ namespace Connect4 {
                 String a = Console.ReadLine ();
                 isNum = int.TryParse (a, out choice);
                 if (isNum == false) Console.Write ("That's not a number! Try again!");
-                if (isNum == true && choice > 7) {
+                if (isNum == true && choice > 7 && choice != 69) {
                     Console.WriteLine ("Number is too big! Try again!");
                     isNum = false;
                 }
