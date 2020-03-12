@@ -41,7 +41,7 @@ namespace Connect4 {
                     checkWin (c, steps, isPlayerOne);
                     changePlayer (isPlayerOne);
                     turn++;
-                    if (turn == 42) winDecided = true;
+                    if (turn == (board.GetLength(0) * board.GetLength(1))) winDecided = true;
                     if (winDecided == true) displayWinner ();
                 }
 
@@ -57,41 +57,41 @@ namespace Connect4 {
             int x = c - 1;
             int y = s - 1;
             if (winDecided == false) { // check row of choice for win
-                winningLine = new int[7, 6];
+                winningLine = new int[a.GetLength(0), a.GetLength(1)];
                 int line = 0;
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < a.GetLength(0); i++) {
                     if (a[i, y] == 1) {
                         line++;
                         winningLine[i, y] = 1;
                     } else {
                         line = 0;
-                        winningLine = new int[7, 6];
+                        winningLine = new int[a.GetLength(0), a.GetLength(1)];
                     }
                     if (line == 4) {
-                        i = 7;
+                        i = a.GetLength(0);
                         winDecided = true;
                     }
                 }
             }
             if (winDecided == false) { // check column of choice for win
-                winningLine = new int[7, 6];
+                winningLine = new int[a.GetLength(0), a.GetLength(1)];
                 int line = 0;
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < a.GetLength(1); i++) {
                     if (a[x, i] == 1) {
                         line++;
                         winningLine[x, i] = 1;
                     } else {
                         line = 0;
-                        winningLine = new int[7, 6];
+                        winningLine = new int[a.GetLength(0), a.GetLength(1)];
                     }
                     if (line == 4) {
-                        i = 6;
+                        i = a.GetLength(1);
                         winDecided = true;
                     }
                 }
             }
             if (winDecided == false) { // check for right diagonal
-                winningLine = new int[7, 6];
+                winningLine = new int[a.GetLength(0), a.GetLength(1)];
                 // determine the starting point
                 int z = x; // place holders so we do not modify the original inputs
                 int w = y;
@@ -101,49 +101,49 @@ namespace Connect4 {
                     w--;
                 }
                 int line = 0;
-                for (int i = w; i < 6; i++) { // iterate through every diagonal to the right of the starting point
+                for (int i = w; i < a.GetLength(1); i++) { // iterate through every diagonal to the right of the starting point
                     if (a[z, i] == 1) {
                         line++;
                         winningLine[z, i] = 1;
                     } else {
                         line = 0;
-                        winningLine = new int[7, 6];
+                        winningLine = new int[a.GetLength(0), a.GetLength(1)];
                     }
                     if (line == 4) // this check runs every iteration to see if 4 has been matched
                     {
                         winDecided = true;
-                        i = 6;
+                        i = a.GetLength(1);
                     }
                     z++;
-                    if (z >= 7) i = 7;
+                    if (z >= a.GetLength(1)) i = a.GetLength(1);
 
                 }
             }
             if (winDecided == false) { // check for left diagonal
-                winningLine = new int[7, 6];
+                winningLine = new int[a.GetLength(0), a.GetLength(1)];
                 // determine the starting point
                 int z = x; // using placeholders again
                 int w = y;
                 while (w != 0 && z != 0) {
                     z++;
                     w--;
-                    if (z > 6) z = 6;
+                    if (z > a.GetLength(1)) z = a.GetLength(1);
                 }
                 int line = 0;
-                for (int i = w; i < 6; i++) {
+                for (int i = w; i < a.GetLength(1); i++) {
                     if (a[z, i] == 1) {
                         line++;
                         winningLine[z, i] = 1;
                     } else {
                         line = 0;
-                        winningLine = new int[7, 6];
+                        winningLine = new int[a.GetLength(0), a.GetLength(1)];
                     }
                     if (line == 4) {
                         winDecided = true;
-                        i = 6;
+                        i = a.GetLength(1);
                     }
                     z--;
-                    if (z < 0) i = 7;
+                    if (z < 0) i = a.GetLength(1);
                 }
             }
             if (winDecided == true) {
@@ -167,7 +167,7 @@ namespace Connect4 {
         }
         private void displayWinner () {
             gb.showWinningBoard (winningLine);
-            if (turn != 42) {
+            if (turn != (board.GetLength(0) * board.GetLength(1))) {
                 Console.Clear ();
                 gb.updateDisplay ();
                 Console.WriteLine ("{0} has won the match in {1} turns!", winner, turn);
@@ -190,10 +190,11 @@ namespace Connect4 {
             while (winDecided == false) {
                 Console.Clear ();
                 gb.updateDisplay ();
-                c = r.Next (1, 8);
+                board = gb.getBoard ();
+                c = r.Next (1, (board.GetLength(0) + 1));
                 Boolean canAdd = gb.addPiece (isPlayerOne, c);
                 while (canAdd == false) {
-                    c = r.Next (1, 8);
+                    c = r.Next (1, (board.GetLength(0)));
                     canAdd = gb.addPiece (isPlayerOne, c);
                 }
                 board = gb.getBoard ();
@@ -206,7 +207,7 @@ namespace Connect4 {
                 turn++;
                 Console.WriteLine ("Turn: " + turn);
                 System.Threading.Thread.Sleep (100);
-                if (turn == 42) winDecided = true;
+                if (turn == (board.GetLength(0) * board.GetLength(1))) winDecided = true;
                 if (winDecided == true) displayWinner ();
             }
         }

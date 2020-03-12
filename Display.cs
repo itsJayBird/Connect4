@@ -38,14 +38,14 @@ namespace Connect4 {
             // adding piece to board
             int k = choice - 1;
             steps = 0;
-            if (gameBoard[k, 5] != " ") {
+            if (gameBoard[k, (gameBoard.GetLength(1) - 1)] != " ") {
                 canAdd = false;
             } else {
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < gameBoard.GetLength(1); i++) {
                     steps++;
                     if (gameBoard[k, i] == " ") {
                         gameBoard[k, i] = piece;
-                        i = 7;
+                        i = gameBoard.GetLength(1);
                     }
                 }
             }
@@ -54,9 +54,9 @@ namespace Connect4 {
         }
         public void showWinningBoard (int[,] winner) {
             //newBoard ();
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < gameBoard.GetLength(0); i++)
             {
-                for (int k = 0; k < 6; k++)
+                for (int k = 0; k < gameBoard.GetLength(1); k++)
                 {
                     if(winner[i,k] == 1) gameBoard[i,k] = "W";
                 }
