@@ -136,11 +136,11 @@ namespace Connect4 {
                 }
                 y++; // after we check a diagonal and don't find anything, start one point higher
             }
-            // next upper diagonals
+            // next upper left diagonals
             x = minupdx;
             y = maxY;
-            for (int i = 0; i < maxupdx; i++) { // iterates until last 
-                int tX = x; 
+            for (int i = 0; i < maxupdx; i++) { // iterates upper diagonals 1,(yL-1) through (xL-4),(yL-1)
+                int tX = x;
                 int tY = y;
                 while (tX == xL && tY != 0) {
                     if (gb[tX, tY] == n) {
@@ -164,8 +164,25 @@ namespace Connect4 {
             // max point for lower diagonal is (xL-1),(yL-1)
             // min starting point for upper diagonal is (xL-2),(yL-1)
             // max point for upper diagonal is 3,(yL-1)
-            // ex: if our board is 7x6 our max would be (7-4),(6-1) or 3,5
-
+            // ex: if our board is 7x6 our max would be 3,(6-1) or 3,5
+            minY = 3;
+            maxY = yL - 1;
+            minupdx = xL - 2;
+            maxupdx = 3;
+            // check right diagonals
+            // start with the lower diagonals
+            x = xL - 1;
+            y = minY;
+            for (int i = 0; i < (yL - 1); i++) {
+                int tY = y;
+                int tX = x;
+                while (tX != 0 && tY != 0) {
+                    if (gb[tX, tY] == n) {
+                        wL++;
+                        winningDiagR[tX, tY] = 1;
+                    }
+                } 
+            }
             return cW;
         }
     }

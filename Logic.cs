@@ -16,8 +16,8 @@ namespace Connect4 {
         private Boolean isDemo = false;
 
         public void startGame () {
-            Console.SetWindowSize (32, 13);
-            Console.SetBufferSize (32, 13);
+            //Console.SetWindowSize (32, 13);
+            //Console.SetBufferSize (32, 13);
             gb = new Display ();
             ui = new UserInput ();
             setPlayerBoards ();
